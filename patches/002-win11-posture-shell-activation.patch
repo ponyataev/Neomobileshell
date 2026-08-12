@@ -1,0 +1,82 @@
+diff --git a/mobile-shell/src/MobileShellPlus/NavBarWindow.h b/mobile-shell/src/MobileShellPlus/NavBarWindow.h
+index 0615cd5..4d20301 100644
+--- a/mobile-shell/src/MobileShellPlus/NavBarWindow.h
++++ b/mobile-shell/src/MobileShellPlus/NavBarWindow.h
+@@ -32,7 +32,7 @@ private:
+ 	{
+ 		Configure();
+ 
+-		if (Wnf::IsTabletMode() || Utils::IsWindows11())
++		if (Wnf::IsTabletMode() || Utils::IsWindows11() || Utils::IsSlateMode())
+ 			SetupAppBar(true);
+ 	}
+ 	
+@@ -40,7 +40,7 @@ private:
+ 	{
+ 		Configure();
+ 
+-		if (Wnf::IsTabletMode() || Utils::IsWindows11())
++		if (Wnf::IsTabletMode() || Utils::IsWindows11() || Utils::IsSlateMode())
+ 			SetupAppBar(true);
+ 	}
+ 
+diff --git a/mobile-shell/src/MobileShellPlus/StatusBarWindow.h b/mobile-shell/src/MobileShellPlus/StatusBarWindow.h
+index 2ffd30d..15446db 100644
+--- a/mobile-shell/src/MobileShellPlus/StatusBarWindow.h
++++ b/mobile-shell/src/MobileShellPlus/StatusBarWindow.h
+@@ -45,7 +45,7 @@ private:
+ 	{
+ 		Configure();
+ 
+-		if (Wnf::IsTabletMode() || Utils::IsWindows11())
++		if (Wnf::IsTabletMode() || Utils::IsWindows11() || Utils::IsSlateMode())
+ 			SetupAppBar(true);
+ 	}
+ 
+@@ -53,7 +53,7 @@ private:
+ 	{
+ 		Configure();
+ 
+-		if (Wnf::IsTabletMode() || Utils::IsWindows11())
++		if (Wnf::IsTabletMode() || Utils::IsWindows11() || Utils::IsSlateMode())
+ 			SetupAppBar(true);
+ 	}
+ 
+diff --git a/mobile-shell/src/MobileShellPlus/main.cpp b/mobile-shell/src/MobileShellPlus/main.cpp
+index c03f899..36734f4 100644
+--- a/mobile-shell/src/MobileShellPlus/main.cpp
++++ b/mobile-shell/src/MobileShellPlus/main.cpp
+@@ -74,7 +74,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In
+ 	statusBarW->PreBuild();
+ 	wind->PreBuild();
+ 
+-	if (Wnf::IsTabletMode() || Utils::IsWindows11())
++	if (Wnf::IsTabletMode() || Utils::IsWindows11() || Utils::IsSlateMode())
+ 		OnTabletModeChanged(true);
+ 
+ 	Wnf::SubscribeWnf(WNF_TMCN_ISTABLETMODE, WnfCallback, NULL);
+@@ -97,6 +97,15 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In
+ 	MSG msg;
+ 	while (GetMessage(&msg, nullptr, 0, 0))
+ 	{
++		if (msg.message == WM_SETTINGCHANGE)
++		{
++			const auto lparam = reinterpret_cast<LPCWSTR>(msg.lParam);
++			if (lparam != nullptr && lstrcmpiW(lparam, L"ConvertibleSlateMode") == 0)
++			{
++				OnTabletModeChanged(Wnf::IsTabletMode() || Utils::IsWindows11() || Utils::IsSlateMode());
++			}
++		}
++
+ 		TranslateMessage(&msg);
+ 		DispatchMessage(&msg);
+ 	}
+@@ -108,7 +117,7 @@ void GlobalSetupAppBar()
+ {
+ 	while (true)
+ 	{
+-		if (Wnf::IsTabletMode() || Utils::IsWindows11())
++		if (Wnf::IsTabletMode() || Utils::IsWindows11() || Utils::IsSlateMode())
+ 		{
+ 			OnTabletModeChanged(true);
+ 			//ForceFullCoverStartScreen();

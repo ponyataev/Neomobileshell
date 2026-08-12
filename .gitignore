@@ -1,0 +1,15 @@
+# Visual Studio / MSBuild
+.vs/
+*.user
+*.suo
+*.userosscache
+
+# Build output
+bin/
+obj/
+out/
+
+# NuGet
+packages/
+*.nupkg
+*.log

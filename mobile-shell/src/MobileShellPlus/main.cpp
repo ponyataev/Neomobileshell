@@ -100,7 +100,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In
 		if (msg.message == WM_SETTINGCHANGE)
 		{
 			const auto lparam = reinterpret_cast<LPCWSTR>(msg.lParam);
-			if (lparam != nullptr && _wcsicmp(lparam, L"ConvertibleSlateMode") == 0)
+			if (lparam != nullptr && lstrcmpiW(lparam, L"ConvertibleSlateMode") == 0)
 			{
 				OnTabletModeChanged(Wnf::IsTabletMode() || Utils::IsWindows11() || Utils::IsSlateMode());
 			}
