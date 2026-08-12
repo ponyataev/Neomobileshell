@@ -4,8 +4,10 @@
 #include "Utils.h"
 #include <ShellScalingApi.h>
 #include <Winuser.h>
+#include <winternl.h>
 
 #pragma comment(lib, "shell32")
+#pragma comment(lib, "ntdll")
 
 void Utils::SendKeyStroke(WORD key)
 {
@@ -276,7 +278,7 @@ void Utils::SetWinTaskbarPosition(WinTaskbarPosition pos)
 {
 	//Issue: this will change the taskbar position in ALL MONITORS
 	//I wasn't able to find how to change on primary taskbar only, unfortunately
-	//ALSO this makes the rotation a lot slower (because APPBAR & GDI slowness technology™)
+	//ALSO this makes the rotation a lot slower (because APPBAR & GDI slowness technologyï¿½)
 	//
 	//Should we enable this?
 
@@ -400,30 +402,31 @@ bool Utils::SystemUsesLightTheme()
 
 bool Utils::IsWindows11()
 {
-	OSVERSIONINFOW VersionInformation;
+	RTL_OSVERSIONINFOW VersionInformation;
+	VersionInformation.dwOSVersionInfoSize = sizeof(RTL_OSVERSIONINFOW);
 
-	VersionInformation.dwOSVersionInfoSize = sizeof(OSVERSIONINFOW);
-	BOOL result = GetVersionExW(&VersionInformation);
-
-	if (result)
+	if (RtlGetVersion(&VersionInformation) == 0)
 	{
 		return VersionInformation.dwBuildNumber >= 21990;
 	}
 
-	return result;
+	return false;
+}
+
+bool Utils::IsSlateMode()
+{
+	return GetSystemMetrics(SM_CONVERTIBLESLATEMODE) == 0;
 }
 
 bool Utils::IsMobileCellularSupported()
 {
-	OSVERSIONINFOW VersionInformation;
+	RTL_OSVERSIONINFOW VersionInformation;
+	VersionInformation.dwOSVersionInfoSize = sizeof(RTL_OSVERSIONINFOW);
 
-	VersionInformation.dwOSVersionInfoSize = sizeof(OSVERSIONINFOW);
-	BOOL result = GetVersionExW(&VersionInformation);
-
-	if (result)
+	if (RtlGetVersion(&VersionInformation) == 0)
 	{
 		return VersionInformation.dwBuildNumber <= 18908;
 	}
 
-	return result;
+	return true;
 }

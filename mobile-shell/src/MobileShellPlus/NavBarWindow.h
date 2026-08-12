@@ -32,7 +32,7 @@ private:
 	{
 		Configure();
 
-		if (Wnf::IsTabletMode() || Utils::IsWindows11())
+		if (Wnf::IsTabletMode() || Utils::IsWindows11() || Utils::IsSlateMode())
 			SetupAppBar(true);
 	}
 	
@@ -40,7 +40,7 @@ private:
 	{
 		Configure();
 
-		if (Wnf::IsTabletMode() || Utils::IsWindows11())
+		if (Wnf::IsTabletMode() || Utils::IsWindows11() || Utils::IsSlateMode())
 			SetupAppBar(true);
 	}
 
