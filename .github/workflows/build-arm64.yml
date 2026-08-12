@@ -12,12 +12,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # The windows-2022 runner ships the MSVC v143 ARM64 build tools and a
-      # Windows SDK. Ensure the SDK version the project targets is present.
-      - name: Install Windows SDK 10.0.19041
-        uses: microsoft/windows-sdk-action@v1
-        with:
-          sdk-version: 10.0.19041.0
+      # windows-2022 ships MSVC v143 (with ARM64 tools) and multiple Windows
+      # SDKs preinstalled, so no extra setup is needed here.
 
       - name: Build Release ARM64
         shell: pwsh
