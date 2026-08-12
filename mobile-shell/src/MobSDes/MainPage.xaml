@@ -1,0 +1,74 @@
+﻿<Page
+    x:Class="MobSDes.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MobSDes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Viewbox Height="24" Width="24">
+        <Canvas Width="87" Height="87">
+            <Grid Width="42" Height="42" CornerRadius="4,0,0,0">
+                <Rectangle>
+                    <Rectangle.Fill>
+                        <LinearGradientBrush>
+                            <LinearGradientBrush.GradientStops>
+                                <GradientStopCollection>
+                                    <GradientStop Color="#77effc" Offset="0"/>
+                                    <GradientStop Color="#50d4ff" Offset="1"/>
+                                </GradientStopCollection>
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Grid>
+
+            <Grid Width="42" Height="42" Canvas.Left="44" CornerRadius="0,4,0,0">
+                <Rectangle>
+                    <Rectangle.Fill>
+                        <LinearGradientBrush>
+                            <LinearGradientBrush.GradientStops>
+                                <GradientStopCollection>
+                                    <GradientStop Color="#5bdcff" Offset="0"/>
+                                    <GradientStop Color="#30baff" Offset="1"/>
+                                </GradientStopCollection>
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Grid>
+
+            <Grid Width="42" Height="42" Canvas.Top="44" CornerRadius="0,0,0,4">
+                <Rectangle>
+                    <Rectangle.Fill>
+                        <LinearGradientBrush>
+                            <LinearGradientBrush.GradientStops>
+                                <GradientStopCollection>
+                                    <GradientStop Color="#50d4ff" Offset="0"/>
+                                    <GradientStop Color="#21aeff" Offset="1"/>
+                                </GradientStopCollection>
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Grid>
+
+            <Grid Width="42" Height="42" Canvas.Left="44" Canvas.Top="44" CornerRadius="0,0,4,0">
+                <Rectangle>
+                    <Rectangle.Fill>
+                        <LinearGradientBrush>
+                            <LinearGradientBrush.GradientStops>
+                                <GradientStopCollection>
+                                    <GradientStop Color="#39c1fd" Offset="0"/>
+                                    <GradientStop Color="#0b9dff" Offset="1"/>
+                                </GradientStopCollection>
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Grid>
+        </Canvas>
+    </Viewbox>
+</Page>
