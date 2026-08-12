@@ -20,21 +20,25 @@ index 4f789ca..c7f0834 100644
      </application>
    </compatibility>
 diff --git a/mobile-shell/src/MobileShellPlus/Utils.cpp b/mobile-shell/src/MobileShellPlus/Utils.cpp
-index 250934d..60df796 100644
+index 250934d..4ce5c5c 100644
 --- a/mobile-shell/src/MobileShellPlus/Utils.cpp
 +++ b/mobile-shell/src/MobileShellPlus/Utils.cpp
-@@ -4,8 +4,10 @@
+@@ -4,8 +4,14 @@
  #include "Utils.h"
  #include <ShellScalingApi.h>
  #include <Winuser.h>
 +#include <winternl.h>
++
++#ifndef RtlGetVersion
++NTSYSAPI NTSTATUS NTAPI RtlGetVersion(_Inout_ PRTL_OSVERSIONINFOW lpVersionInformation);
++#endif
  
  #pragma comment(lib, "shell32")
 +#pragma comment(lib, "ntdll")
  
  void Utils::SendKeyStroke(WORD key)
  {
-@@ -276,7 +278,7 @@ void Utils::SetWinTaskbarPosition(WinTaskbarPosition pos)
+@@ -276,7 +282,7 @@ void Utils::SetWinTaskbarPosition(WinTaskbarPosition pos)
  {
  	//Issue: this will change the taskbar position in ALL MONITORS
  	//I wasn't able to find how to change on primary taskbar only, unfortunately
@@ -43,17 +47,17 @@ index 250934d..60df796 100644
  	//
  	//Should we enable this?
  
-@@ -400,30 +402,31 @@ bool Utils::SystemUsesLightTheme()
+@@ -400,30 +406,31 @@ bool Utils::SystemUsesLightTheme()
  
  bool Utils::IsWindows11()
  {
 -	OSVERSIONINFOW VersionInformation;
+-
+-	VersionInformation.dwOSVersionInfoSize = sizeof(OSVERSIONINFOW);
+-	BOOL result = GetVersionExW(&VersionInformation);
 +	RTL_OSVERSIONINFOW VersionInformation;
 +	VersionInformation.dwOSVersionInfoSize = sizeof(RTL_OSVERSIONINFOW);
  
--	VersionInformation.dwOSVersionInfoSize = sizeof(OSVERSIONINFOW);
--	BOOL result = GetVersionExW(&VersionInformation);
--
 -	if (result)
 +	if (RtlGetVersion(&VersionInformation) == 0)
  	{

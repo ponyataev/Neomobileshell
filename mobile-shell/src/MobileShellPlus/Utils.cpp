@@ -6,6 +6,10 @@
 #include <Winuser.h>
 #include <winternl.h>
 
+#ifndef RtlGetVersion
+NTSYSAPI NTSTATUS NTAPI RtlGetVersion(_Inout_ PRTL_OSVERSIONINFOW lpVersionInformation);
+#endif
+
 #pragma comment(lib, "shell32")
 #pragma comment(lib, "ntdll")
 
